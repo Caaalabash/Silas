@@ -24,7 +24,7 @@ const mysql = require('./index')
     // delete user12
     await connection.query(`DELETE FROM tb_user WHERE id=12`)
     // update user12's money (Unknown column 'money' in 'field list')
-    await connection.query(`UPDATE tb_system_tree SET name='/log/123456' WHERE id=44`)
+    await connection.query(`UPDATE tb_user SET money='99999999999' WHERE id=12`)
     // Let's do it
     await connection.commit()
   } catch (e) {

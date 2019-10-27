@@ -8,7 +8,9 @@
 const mysql = require('./index')
 
 ;(async () => {
-  const pool = await mysql.createPool({
+  // createPool is sync
+  // createConnection is async
+  const pool = mysql.createPool({
     host: '127.0.0.1',
     user: 'root',
     password: 'root',

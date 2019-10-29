@@ -21,3 +21,18 @@ function retryStrategy(failTimes) {
 
 retry(fetch, 100, retryStrategy).then(console.log)
 ````
+
+### measure
+
+````javascript
+const measure = require('./promise-time')
+
+function fetch() {
+  return new Promise((resolve, reject) => {
+    if (Math.random() < 0.1) resolve('SUCCESS')
+    else reject(new Error('BAD LUCK'))
+  })
+}
+
+measure(fetch)
+````

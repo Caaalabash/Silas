@@ -1,11 +1,18 @@
-## ？
+## promise-mysql-lite
 
-阅读[node-promise-mysql](https://github.com/CodeFoodPixels/node-promise-mysql)源码后的重写
+A lite promise wrapper for [mysql](https://github.com/mysqljs/mysql). 
+**It's just a basic version, be careful to use!!!**
+
+## INSTALL
+
+````
+npm install @caaalabash/promise-mysql-lite -S
+````
 
 ## Example
 
 ````javascript
-const mysql = require('./index')
+const mysql = require('@caaalabash/promise-mysql-lite')
 
 ;(async () => {
   // createPool is sync

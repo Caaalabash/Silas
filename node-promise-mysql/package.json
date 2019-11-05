@@ -1,7 +1,7 @@
 {
-  "name": "promise-mysql",
-  "version": "1.0.0",
-  "description": "阅读[node-promise-mysql](https://github.com/CodeFoodPixels/node-promise-mysql)源码后的重写",
+  "name": "@caaalabash/promise-mysql-lite",
+  "version": "0.0.1",
+  "description": "promise-mysql",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -9,7 +9,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "keywords": [
+    "promise",
+    "mysql",
+    "promise-mysql"
+  ],
+  "author": "Caaalabash",
   "license": "ISC",
   "dependencies": {
     "mysql": "^2.17.1"

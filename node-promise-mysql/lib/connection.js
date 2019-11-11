@@ -3,11 +3,19 @@ const mysql = require('mysql')
 
 class connection {
   constructor(config = {}, _connection) {
+    if (config.reconnect === true) {
+      this.reconnect = true
+      config.reconnect = undefined
+    }
     this.config = config
 
     return (async () => {
-      this.connection = _connection || mysql.createConnection(config)
-      !_connection && await promisify(this.connection.connect.bind(this.connection))()
+      if (_connection && this.reconnect) {
+        addReconnectHandler(_connection, mysql, this.config)
+        this.connection = _connection
+      } else if (!_connection) {
+        this.connection = await connect(mysql, this.config, this.reconnect)
+      }
 
       ;['query', 'beginTransaction', 'commit', 'rollback'].forEach(method => {
         this[`_${method}`] = promisify(this.connection[method].bind(this.connection))
@@ -36,6 +44,40 @@ class connection {
   release() {
     this.connection.release()
   }
+
+  on(event, fn) {
+    this.connection.on(event, fn)
+  }
+}
+
+const connect = (mysql, config, reconnect) => {
+  const connection = mysql.createConnection(config)
+
+  return new Promise((resolve, reject) => {
+    connection.connect(e => {
+      if (e) {
+        return reject(e)
+      } else {
+        if (reconnect) {
+          addReconnectHandler(connection, mysql, config)
+        } else {
+          return resolve(connection)
+        }
+      }
+    })
+  })
+}
+
+const addReconnectHandler = (connection, mysql, config) => {
+  connection.once('error', err => {
+    if (
+      err.code === 'PROTOCOL_CONNECTION_LOST' ||
+      err.code === 'ECONNRESET' ||
+      err.code === 'PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR'
+    ) {
+      connect(mysql, config)
+    }
+  })
 }
 
 

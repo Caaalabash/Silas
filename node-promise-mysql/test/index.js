@@ -1,20 +1,4 @@
-## promise-mysql-lite
-
-A lite promise wrapper for [mysql](https://github.com/mysqljs/mysql). 
-**It's just a basic version, be careful to use!!!**
-
-You should use [node-promise-mysql](https://github.com/CodeFoodPixels/node-promise-mysql)
-
-## INSTALL
-
-````
-npm install @caaalabash/promise-mysql-lite -S
-````
-
-## Example
-
-````javascript
-const mysql = require('@caaalabash/promise-mysql-lite')
+const mysql = require('../index')
 
 const config = {
   host: '10.10.5.146',
@@ -51,4 +35,3 @@ const config = {
   const singleConnection = await mysql.createConnection(config)
   await singleConnection.query(`SELECT * FROM tb_user`)
 })()
-````

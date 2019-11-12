@@ -17,7 +17,7 @@ class connection {
         this.connection = await connect(mysql, this.config, this.reconnect)
       }
 
-      ;['query', 'beginTransaction', 'commit', 'rollback'].forEach(method => {
+      ;['query', 'beginTransaction', 'commit', 'rollback', 'end'].forEach(method => {
         this[`_${method}`] = promisify(this.connection[method].bind(this.connection))
       })
 
@@ -43,6 +43,22 @@ class connection {
 
   release() {
     this.connection.release()
+  }
+
+  end() {
+    return this['_end'].apply(this, arguments)
+  }
+
+  destroy() {
+    this.connection.destroy()
+  }
+
+  pause() {
+    this.connection.pause()
+  }
+
+  resume() {
+    this.connection.resume()
   }
 
   on(event, fn) {

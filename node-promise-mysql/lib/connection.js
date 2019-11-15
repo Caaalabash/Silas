@@ -76,9 +76,8 @@ const connect = (mysql, config, reconnect) => {
       } else {
         if (reconnect) {
           addReconnectHandler(connection, mysql, config)
-        } else {
-          return resolve(connection)
         }
+        return resolve(connection)
       }
     })
   })

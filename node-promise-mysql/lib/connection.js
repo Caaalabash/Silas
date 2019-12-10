@@ -10,11 +10,11 @@ class connection {
     this.config = config
 
     return (async () => {
-      if (_connection && this.reconnect) {
-        addReconnectHandler(_connection, mysql, this.config)
+      if (_connection) {
+        if (this.reconnect) addReconnectHandler(_connection, mysql, this.config)
         this.connection = _connection
-      } else if (!_connection) {
-        this.connection = await connect(mysql, this.config, this.reconnect)
+      } else {
+        this.connection = await connection(mysql, this.config, this.reconnect)
       }
 
       ;['query', 'beginTransaction', 'commit', 'rollback', 'end'].forEach(method => {

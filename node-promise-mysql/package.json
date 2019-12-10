@@ -1,6 +1,6 @@
 {
   "name": "@caaalabash/promise-mysql-lite",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "promise-mysql",
   "main": "index.js",
   "directories": {

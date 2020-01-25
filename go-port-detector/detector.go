@@ -6,7 +6,9 @@ import (
 	"net"
 	"strconv"
 	"sync"
+	"sync/atomic"
 	"time"
+	"unsafe"
 )
 
 var timeout int
@@ -15,7 +17,6 @@ var routineLimit int
 
 var availablePort []int
 var finishCount int
-var lock sync.Mutex
 var lockArr sync.Mutex
 
 const totalPortCount = 65536
@@ -74,9 +75,7 @@ func checkPort(ip string, port int, wg *sync.WaitGroup, limitChan *chan struct{}
 		lockArr.Unlock()
 		_ = conn.Close()
 	}
-	lock.Lock()
-	finishCount++
-	lock.Unlock()
+	atomic.AddInt32((*int32)(unsafe.Pointer(&finishCount)), 1)
 	<-*limitChan
 	wg.Done()
 }
